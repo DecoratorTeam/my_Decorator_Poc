@@ -1,0 +1,62 @@
+<html>
+   <head>
+      <title>
+         Product Detail Page
+      </title>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+   </head>
+   <body>
+        <div class=" productdetailspage">
+            <div class="container">
+                <h1>Product Detail Page</h1>
+                <nav aria-label="breadcrumb">
+                    <ol class="breadcrumb">
+                      <li class="breadcrumb-item"><a routerLink="">Category</a></li>
+                      <li class="breadcrumb-item"><a (click) = "getProductListCrumbItem()">ProductList</a></li>
+                      <li class="breadcrumb-item active" aria-current="ProductDetail">ProductDetail</li>
+                    </ol>
+               </nav>
+                <div class="products">
+                    <div class="col-lg-6 col-sm-6">
+                        <div class="productslist">
+                            <div>
+                                <a class="image"><img src="{{imgurl}}"></a>
+                            </div>
+                        </div>
+                        <div class="alternativeimages">
+                            <ul>
+                                <li *ngFor = "let colorCodeImage of colorCodeImages">
+                                    <a class="image"><img src={{colorCodeImage.ImageURL}} (click) = "getImageUrls(colorCodeImage.ImageURL)"></a>
+                                </li>
+                                <div class="clearfix"></div>
+                            </ul>   
+                        </div>
+                    </div>
+                    <div class="col-lg-6 col-sm-6 productdetails">
+                        <h2>{{product?.productName}}</h2>
+                        <h3> ${{product?.msrp}}</h3>
+                        <ul>
+                            <li *ngFor="let size of product?.size.split(',')">{{size}}</li>
+                        </ul>      
+                        <div class="productdescription">
+                            <h2>Description:</h2>
+                            <p>{{product?.productDescription}}</p>
+                        </div>
+                        <div>
+                           <ul>
+                              <li *ngFor="let colorCode of productImageColorCodes"  [style.background-color]="colorCode" (mouseover) = "getColorCodeImages(colorCode)"> </li>
+                           </ul>
+                        </div>
+                        <div class="addtocart-buttons">
+                            <button type="button" class="btn btn-primary">Add To Cart</button>
+                            <button type="button" class="btn btn-primary" (click) = "getToolPage();">Customize</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="clearfix"></div>
+            </div>
+        </div>
+   </body>
+</html>

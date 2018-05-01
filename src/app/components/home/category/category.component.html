@@ -1,0 +1,27 @@
+<html ng-app="app" ng-controller="AppController">
+  <head>
+      <title>
+         Select Your Category
+      </title> 
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+    </head>
+    <body>       
+        <div class="container">
+            <h3>Shop By Product</h3>
+            <div class="products">
+                    <div class="col-lg-12 col-sm-12">
+                        <div class="col-lg-4 col-sm-4 col-xs-12" *ngFor = "let category of categories" (click) = 'getProducts(category.categoryID);'>
+                            <div class="productslist">
+                                <a class="image"> <img class="img-responsive" src={{category.categoryImage}} /></a>
+                                <p>{{category.categoryName}}</p>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="clearfix"></div>
+            </div>
+        </div>
+    </body>
+</html>
+

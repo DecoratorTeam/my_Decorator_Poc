@@ -1,0 +1,178 @@
+<html>
+   <head>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.js"></script>
+      <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/jqueryui/1.12.1/jquery-ui.min.css">
+      <script src="https://cdnjs.cloudflare.com/ajax/libs/fabric.js/1.7.22/fabric.min.js"></script>
+      <script src="https://fastcdn.org/FileSaver.js/1.1.20151003/FileSaver.min.js"></script>
+      <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+      <script src="../../assets/FileSaver.min.js"></script>
+      <!-- <script src="../../assets/jspdf.js"></script> -->
+      <script src="//cdnjs.cloudflare.com/ajax/libs/jspdf/1.3.3/jspdf.min.js"></script>
+      <style>
+      canvas.solid {border-style: solid;}
+      </style>
+   </head>
+   <body>
+     <div class=" container">
+       <h1>Designer Tool</h1>
+     
+     <nav aria-label="breadcrumb">
+        <ol class="breadcrumb">
+          <li class="breadcrumb-item"><a routerLink="">Category</a></li>
+          <li class="breadcrumb-item"><a (click) = "getProductListCrumbItem()">ProductList</a></li>
+          <li class="breadcrumb-item"><a (click) = "getProductDetailCrumbItem()">ProductDetails</a></li>
+          <li class="breadcrumb-item active" aria-current="DesignerTool">DesignerTool</li>
+        </ol>
+    </nav>
+  </div>
+    <div class="decoratorproduct">
+      <div class=" container">
+         <div class="col-md-3 form-inline">
+            <div class="form-group">
+               <div class="file-upload">
+                  <div class="file-select">
+                     <div class="file-select-button" id="fileName">Choose File</div>
+                     <div class="file-select-name" id="noFile">No file chosen...</div>
+                     <input type="file" name="chooseFile" id="FileUpload" multiple>
+                  </div>
+               </div>
+            </div>
+            <div class="form-group">
+               <select id="ImageFilters" class="form-control" top="100" left="100">
+                  <option value="clear">Clear Filters</option>
+                  <option value="Grayscale">Grayscale</option>
+                  <option value="Sepia">Sepia</option>
+                  <option value="Convolute">Convolute</option>
+               </select>
+            </div>
+            <div class="form-group">
+               <select id="FontFamily" class="form-control">
+                  <option value="select">Select FontFamily</option>
+                  <option value="Arial">Arial</option>
+                  <option value='Comic Sans MS'>Comic Sans MS</option>
+                  <option value='Lucida Sans Unicode'>Lucida Sans Unicode</option>
+                  <option value='Tahoma'>Tahoma</option>
+                  <option value='Trebuchet MS'>Trebuchet MS</option>
+                  <option value='Verdana'>Verdana</option>
+               </select>
+            </div>
+
+            
+            
+            <div class="form-group">
+               <label class="" for="Angle">Angle</label>
+               <div class="range-slider form-control">
+                  <input class="range-slider__range slider-handle min-slider-handle round" type="range" min="0" max="360" value="50"  id="Angle" [(ngModel)]= "Angle" [ngModelOptions]="{allowInvalid: false}">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="" for="MoveLeft">Move Left/Right</label>
+               <div class="range-slider form-control">
+                  <input class="range-slider__range slider" type="range" min="0" max="500" value="50" id="MoveLeft">
+               </div>
+            </div>
+            <div class="form-group">
+               <label class="" for="MoveTop">Move Up/Down</label>
+               <div class="range-slider form-control">
+                  <input class="range-slider__range slider" type="range" min="0" max="500" value="50"  id="MoveTop" width="100">
+               </div>
+            </div>
+            <!-- <div class="form-group texttype">
+               <button id="zoomIn" class="btn btn-primary btn-small"><span class="glyphicon glyphicon-plus"></span></button>
+               <button id="zoomOut" class="btn btn-primary btn-small"><span class=" glyphicon glyphicon-minus"></span></button>
+               <div class="clearfix"></div>
+            </div> -->
+         </div>
+         <div class="col-md-6" style="text-align:center;">
+            <canvas id="topCanvas" width="500" height="700"></canvas>
+              <div id="mainDiv" style="position:absolute;width:50%;height:72%;top:30%;left:31%;">
+                <canvas id="baseCanvas" style="position:absolute"></canvas>
+              </div>
+         </div>
+         <div class="col-md-3 form-inline text-center">
+            <div class="form-group addtext">
+               <input type="text" class="form-control" id="EmbText" placeholder="Add text" />
+               <div class="addcurvebuttons">
+               <button type="button" value="" id="AddText" class="btn btn-primary">Add Text</button>
+               <button type="button" value="" id="CurveText" class="btn btn-primary">Curve Text</button>
+              <div class="clearfix"></div>
+              </div>
+            </div>
+            <div class="curveProperties">
+            <div class="form-group ">
+               <label class="" for="Radius">Radius</label>
+               <div class="range-slider form-control">
+                  <input class="range-slider__range"  type="range" min="0" max="250" value="100"  id="Radius" [(ngModel)]= "Radius" [ngModelOptions]="{allowInvalid: false}">
+               </div>
+            </div>
+            <div class="form-group ">
+               <label class="" for="Radius">Spacing</label>
+               <div class="range-slider form-control">
+                  <input class="range-slider__range slider-handle min-slider-handle round" type="range" min="0" max="50" value="10"  id="Spacing" [(ngModel)]= "Spacing" [ngModelOptions]="{allowInvalid: false}">
+               </div>
+            </div>
+          </div>
+            <div class="form-group texttype">
+               <button id="Bold" class="btn btn-primary btn-small"><span class="glyphicon glyphicon-bold"></span></button>
+               <button id="Italic" class="btn btn-primary btn-small"><span class=" glyphicon glyphicon-italic"></span></button>
+               <div class="clearfix"></div>
+            </div>
+            <div class="form-group">
+              <button id="Center" class="btn btn-primary btn-small"><span class="glyphicon glyphicon-align-center"></span></button>
+              <div class="clearfix"></div>
+          </div>
+            <div class="form-group undoredo">
+               <button id="Undo" class=" btn btn-primary btn-small" ><span class="glyphicon glyphicon-share-alt" style="-moz-transform: scaleX(-1);
+                  -o-transform: scaleX(-1);
+                  -webkit-transform: scaleX(-1);
+                  transform: scaleX(-1);
+                  filter: FlipH;
+                  -ms-filter: 'FlipH';"></span></button>
+               <button id="Redo" class="btn btn-primary btn-small"><span class="glyphicon glyphicon-share-alt "> </span></button>
+               <div class="clearfix"></div>
+            </div>
+            <div class="colorselectionpanel">
+            <div class="form-group select-color">
+               <label class="" for="fontColorPicker">Font Color</label>
+               <div class="">
+                  <input type="color" id="fontColorPicker" class="form-control input-small" value="#000000" style="width:40;"  [(ngModel)]= "fontColor" [ngModelOptions]="{allowInvalid: false}">
+               </div>
+            </div>
+            <div class="form-group select-color">
+               <label class="" for="textBackgroundColorPicker">Text Bg Color</label>
+               <div class="">
+                  <input type="color" id="textBackgroundColorPicker" class="form-control input-small" value="#ffffff" style="width:40;" [(ngModel)]= "textBackgroundColor" [ngModelOptions]="{allowInvalid: false}">
+               </div>
+            </div>
+            <div class="clearfix"></div>
+          </div>
+            <div class="form-group text-center imageconverter">
+              <!-- <input type="button" value="To Image" id="ToImage" class="btn btn-primary"/> -->
+              <button type="button" id="Preview" class="btn btn-primary preview" data-toggle="modal" data-target="#PreviewPopUp">Preview</button>
+              <button type="button" value="" id="ToImage" class="btn btn-primary export">Export</button>
+              <div class="clearfix"></div>
+          </div>
+
+          
+            <div class="modal fade" id="PreviewPopUp" role="dialog">
+              <div class="modal-dialog">
+              
+                <!-- Modal content-->
+                <div class="modal-content">
+                  <div class="modal-header">
+                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                    <h4 class="modal-title">Preview</h4>
+                  </div>
+                  <div class="modal-body">
+                    <img id="DemoImage" style="width:500px;height:700px">
+                  </div>
+                </div>
+                
+              </div>
+            </div>
+         </div>
+      </div>
+   </div>
+   </body>
+</html>
