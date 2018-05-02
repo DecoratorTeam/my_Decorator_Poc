@@ -9,7 +9,7 @@ export class ProductdetailService {
  
   //GetProductAndImagesByProductID
   getProductAndImagesByProductID(productID){
-    var res=this.http.get('http://localhost:3000/GetProductAndImagesByProductID/'+ productID).map(products => products.json());
+    var res=this.http.get('https://decoratorpoc.azurewebsites.net/GetProductAndImagesByProductID/'+ productID).map(products => products.json());
     console.log(JSON.stringify(res));
      return res;
   }

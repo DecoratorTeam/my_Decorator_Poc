@@ -10,7 +10,7 @@ export class CategoryService {
   
    //GetAllCategories From API
   getAllCategories(){
-    var res=this.http.get('http://localhost:3000/GetAllCategories').map(categories => categories.json());
+    var res=this.http.get('https://decoratorpoc.azurewebsites.net/GetAllCategories').map(categories => categories.json());
     console.log(res);
     return res;
   }

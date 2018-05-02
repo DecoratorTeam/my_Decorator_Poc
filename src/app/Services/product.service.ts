@@ -9,7 +9,7 @@ export class ProductService {
   
    //GetProductsByCatgeoryID From API
    getProductsByCategoryId(categoryID){
-    var res=this.http.get('http://localhost:3000/GetProductsByCategoryId/'+ categoryID).map(products => products.json());
+    var res=this.http.get('https://decoratorpoc.azurewebsites.net/GetProductsByCategoryId/'+ categoryID).map(products => products.json());
     console.log(res);
     return res;
   }
